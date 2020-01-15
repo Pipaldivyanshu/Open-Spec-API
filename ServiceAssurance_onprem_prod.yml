@@ -1,0 +1,2484 @@
+﻿swagger: '2.0'
+# This is your document metadata
+info:
+  title: VPS Service Assurance API
+  version: "0.0.1"
+  description: REST API for Service Assurance
+  
+host: partnersolutionsconnectproxysecure.verizon.com
+basePath: '/gyev-vpssa-ticket'
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+# Describe your paths here
+paths:
+
+  /addticket:
+    post:
+      summary: Create ticket request
+      description: This API will allow you to create a ticket for VPS circuits
+      operationId: createRequestUsingPOST
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true  
+        - in: "body"
+          name: "body"
+          description: >-
+                      <table style="width:100%" class="table_yaml request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>description<br><span style="color:#d52b1e;">* required</span></td><td>string(256)</td><td>Trouble Information details specified by the customer.</td></tr><tr><td>troubleType<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>Customer need to select trouble type. It is mandatory in creation of trouble ticket.</td></tr><tr><td>externalId<br><span style="color:#d52b1e;">* required</span></td><td>string(36)</td><td>A String contains the source system generated requestId of trouble ticket.Max length is 36</td></tr><tr><td>severity</td><td>string</td><td>severity values will be in[0,1,2,3]. 0 = out of service ,1 = back in service,2 = service impairment,3 = non service affecting trouble</td></tr><tr><td>priority</td><td>string</td><td>priority values will be in[0,1,2,3]. 0 = undefined ,1 = minor,2 = major,3 = serious</td></tr><tr><td>ticketRelationship</td><td>object</td><td>A reference type. List of values which are mandatory from the customer to create the trouble ticket and having relation with the trouble ticket.</td></tr><tr><td>sourceSystem</td><td>string</td><td>Third party support.(M) Ex:CX</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>Userid of the customer and its maxLength is 10</td></tr><tr><td>serviceProfile<br><span style="color:#d52b1e;">* required</span></td><td>string(8)</td><td>A String represents the following values  VzB/VzT. (M)</td></tr><tr><td>networkID<br><span style="color:#d52b1e;">* required</span></td><td>string(5)</td><td>A String contains network id of the customer.Length is 5 (M)</td></tr><tr><td>serviceID<br><span style="color:#d52b1e;">* required</span></td><td>string(64)</td><td>A String contains service id of the customer. (M) </td></tr><tr><td>customerRefNumber</td><td>string(15)</td><td>A String represents, it is used for customer reference.(o)Max(15).</td></tr><tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>A String contains account name of the customer.Max length is 4 (M)</td></tr><tr><td>managerContactName<br><span style="color:#d52b1e;">* required</span></td><td>string</td><td>A string represents Manager Contact name.(M)</td></tr><tr><td>managerContactPhone<br><span style="color:#d52b1e;">* required</span></td><td>number(18)</td><td>A long number represents Manager Contact Phone.(M)</td></tr><tr><td>issueType<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string represents the issueType.It is used for VzB Mapping .(M)</td></tr><tr><td>subType<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string represents the subtype. It is used for VzB Mapping..(M)</td></tr><tr><td>category<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string represents the Category. It is used for VzB Mapping.(M) Ex:Category default value is :DATA.Note: default value will change as per the cx input.</td></tr><tr><td>type<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string represents the type. It is used for VzB Mapping.(M) Ex:Type default value is : CUSTROUBLE,Note: default  value will change as per the cx input.</td></tr><tr><td>relatedEntity</td><td>object</td><td>A reference type contains list of related entity references. An entity that is related to the trouble ticket. The entity against which the trouble ticket is associated.</td></tr><tr><td>aLocationAccessAddress</td><td>object</td><td>Alocation Access Address object</td></tr><tr><td>aLocationAccessPerson</td><td>object</td><td>Alocation Access Person object</td></tr><tr><td>premisesName</td><td>string(64)</td><td>Premise name where network is installed and its maxLength is 64 </td></tr><tr><td>premisesAddress</td><td>object</td><td>premisesAddress</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civicAddress where network is installed and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city where network is installed and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state where network is installed and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip where network is installed and its maxLength is 64</td></tr><tr><td>name</td><td>string(64)</td><td>Name of ALocation Access Person and its maxLength is 64</td></tr><tr><td>phone</td><td>number(18)</td><td>phone of ALocation Access Person and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civic address of ALocation Access Person and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city of ALocation Access Person and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state of ALocation Access Person and its maxLength is 64</td></tr><tr><td>zip</td><td>string</td><td>zip of ALocation Access Person and its maxLength is 64</td></tr><tr><td>email</td><td>string</td><td>email of ALocation Access Person and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax of ALocation Access Person and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response of the ALocation Access Person and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager of user and its maxLength is 64</td></tr><tr><td>premisesAccessHours</td><td>object</td><td>Premises Access Hours object</td></tr><tr><td>circuitAccessHours</td><td>object</td><td>Circuit Access Hours object</td></tr><tr><td>daysOfWeek</td><td>object</td><td>Circuit Access Hours Day</td></tr><tr><td>timeOfDays</td><td>object</td><td>A reference represents the dayFrom and dayTo,end time.</td></tr><tr><td>sundayFrom</td><td>string</td><td>A time represents in the following format. Premises Local Time 24 Hours Time Format HH:MM</td></tr><tr><td>sundayTo</td><td>string</td><td>A time represents in the following format. Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>mondayFrom</td><td>string</td><td>A time represents in the following format. Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>mondayTo</td><td>string</td><td>A time represents in the following format. Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>tuesdayFrom</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>tuesdayTo</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>wednesdayFrom</td><td>string</td><td>A time represents in the following format. Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>wednesdayTo</td><td>string</td><td>A time represents in the following format. Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>thursdayFrom</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>thursdayTo</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>fridayFrom</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>fridayTo</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>saturdayFrom</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>saturdayTo</td><td>string</td><td>A time represents in the following format.Premises Local Time24 Hours Time Format HH:MM</td></tr><tr><td>days</td><td>object</td><td>A reference of type represents the availability of the week.</td></tr><tr><td>sunday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>monday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>tuesday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>wednesday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>thursday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>friday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>saturday</td><td>boolean</td><td>values will be in [true,false]</td></tr><tr><td>timeZone</td><td>string</td><td>Time zone format Ex:GMT, This attribute is for VzB types</td></tr><tr><td>circuitAccessDateforEtms</td><td>string</td><td>A Date of YYYY-MM-DD HH:MM format specifies the date for circuit access .This attribute is for VzB types.</td></tr><tr><td>authorization</td><td>object</td><td>A reference type contains the authorization information related to trouble ticket like authentication person details & type of issue  dispatch/ test need to do etc.. details. (Optional).</td></tr><tr><td>authorizationItem</td><td>object</td><td>authorizationItem</td></tr><tr><td>state</td><td>string</td><td>values will be in [2,3]</td></tr><tr><td>authTime</td><td>DateTime Timestamp</td><td>authorization time and its format is YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>type</td><td>object</td><td>type</td></tr><tr><td>afterHoursRepair</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>standby</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>afterHoursStandby</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>test</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>managerInitiatedTest</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>dispatch</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>noAccess</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>delayedMaintenance</td><td>boolean</td><td>values will be in[true,false]</td></tr><tr><td>release</td><td>boolean</td><td>release</td></tr><tr><td>deregulatedWork</td><td>boolean</td><td>deregulatedWork</td></tr><tr><td>powerEquipment</td><td>boolean</td><td>Attribute for powerEquipment On. Select true/false.</td></tr><tr><td>authPerson</td><td>object</td><td>group tag of person replying for authorization</td></tr><tr><td>name</td><td>string(64)</td><td>Authorization Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>string(18)</td><td>Authorization Person Reach TN and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager its maxLength is 64</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civicAddress and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip and its maxLength is 64</td></tr><tr><td>escalationList</td><td>object</td><td>escalationlist group</td></tr><tr><td>escalationItem</td><td>object</td><td>escalationItem</td></tr><tr><td>escTime</td><td>DateTime Timestamp</td><td>escalation time and its format:YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>level</td><td>string</td><td>values will be in [0,1,2,3,4] i.e 0 = no escalation,1 = first level,2 = second level,3 = third level,4 = fourth level, and maxLenght is 1</td></tr><tr><td>requestPerson</td><td>object</td><td>Person requesting the Escalation</td></tr><tr><td>name</td><td>string(64)</td><td>Escalation Request Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>number(18)</td><td>Escalation Request phone and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string</td><td>pager its maxLength is 64</td></tr><tr><td>additionalDetails</td><td>object</td><td>A reference type contains additional details of trouble ticket.</td></tr><tr><td>troubleReportWindow</td><td>object</td><td>troubleReportWindow</td></tr><tr><td>troubleDetectionTime</td><td>DateTime Timestamp</td><td>troubleDetectionTime format: YYYY-MM-DDTHH:MM:SS  minLength: 14 maxLength:20</td></tr><tr><td>troubleReportStatusWindow</td><td>object</td><td>troubleReportStatusWindow</td></tr><tr><td>day</td><td>string</td><td>represents day and in between minimum: '0', maximum: '31'</td></tr><tr><td>hour</td><td>string</td><td>represents hours and in between minimum: '0', maximum: '23'</td></tr><tr><td>minute</td><td>string</td><td>represents minutes and in between minimum: '0', maximum: '59'</td></tr><tr><td>telephoneDetails</td><td>object</td><td>Telephone Details</td></tr><tr><td>timeZone</td><td>string</td><td>Time zone format Ex: GMT for VzB</td></tr><tr><td>detectionTime</td><td>string</td><td>troubleDetectionTime format: YYYY-MM-DDTHH:MM:SS GMT minLength: 14 maxLength:20</td></tr><tr><td>calledFrom</td><td>number</td><td>represents a number </td></tr><tr><td>calledTo</td><td>number</td><td>represents a number </td></tr><tr><td>issueNoticeTime</td><td>object</td><td>Telephone Details</td></tr><tr><td>timeZone</td><td>string</td><td>Time zone format Ex: GMT for VzB</td></tr><tr><td>noticeTime</td><td>string</td><td>Mandatory field Format YYYY-MM-DD HH:MM for VzB</td></tr></tbody></table>
+                      
+                      <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>externalId</td><td>string(50)</td><td>A string represents the externalid</td></tr><tr><td>createResponse</td><td>object</td><td>A cancel response represents ticket status </td></tr><tr><td>troubleReportID</td><td>string</td><td>An String represents the troublereportID</td></tr><tr><td>receivedTime</td><td>DateTime</td><td>A DateTime epresents the receivedTime in the format of YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>rdnsSequenceItem</td><td>object Array</td><td>An object reference.</td></tr><tr><td>type</td><td>string</td><td>Values of the type is networkId,troubleReportID,accountName</td></tr><tr><td>assertion</td><td>string</td><td>Values of the corresponding type</td></tr><tr><td>agentContactPerson</td><td>object</td><td>A reference represents the agentcontactperson for the ticket generated.</td></tr><tr><td>name</td><td>String</td><td>Name of the agent contact person</td></tr><tr><td>phone</td><td>number</td><td>Phone of the agentcontactperson represents the error message.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/CreateTicketRequest'
+      responses:
+        '200':
+          description: SUCCESS
+          schema:
+            $ref: '#/definitions/CreateTicketResponse'  
+        '206':
+          description: ERROR
+          schema:
+           type: object
+           properties:
+              responseStatus:
+                type: string
+                description: Response Status
+                #Here the status of the response is populated with either SUCCESS/ERROR.
+              responseDescription:
+                type: string
+                description: Response Description
+              responseCode:
+                type: string
+                description: Response Code
+              createResponse:
+                type: object
+                description: Object containing the response details from the system
+                properties:
+                    
+                    rdnSequenceItem:
+                        type: array
+                        description: rdnSequenceItem
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: contains networkid/serviceid/account name
+                              enum: [networkId,serviceId,accountName]
+                            assertion:
+                              type: string 
+                              description: value of corresponding type
+  /getstatus:
+    post:
+      summary:  Get status of the ticket.
+      description: This API will get the approriate ticket info of VPS circuits
+      operationId:  GetStatusPost
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true  
+        - in: "body"
+          name: "body"
+          description: <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>troubleReportID<br><span style="color:#d52b1e;">* required</span></td><td>String(32)</td><td>Trouble Ticket id .</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>Userid of the customer</td></tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>A String contains account name of the customer.(M)</td></tr><tr><td>serviceProfile(8)<br><span style="color:#d52b1e;">* required</span></td><td>string</td><td>A String represents the following values VzB/VzT. (M)</td></tr><tr><td>sourceSystem<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>Third party support.Max length is(M) Ex:CX</td></tr></tbody></table>
+              <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>ticketStatus</td><td>string</td><td>A String represents ticket status </td></tr><tr><td>troubleReportID</td><td>String(36)</td><td>Trouble report id</td></tr><tr><td>ticketOpenDate</td><td>date(36)</td><td>Ticket Open Date</td></tr><tr><td>activityLog</td><td>object Array</td><td>Activity log details.This object elements is nullable when the response is error .</td></tr><tr><td>comment</td><td>string(36)</td><td>comment of the ticket</td></tr><tr><td>createTime</td><td>date(36)</td><td>create Time of the Ticket int the format (YYYY-MM-DDTHH:MM:SSZ)</td></tr><tr><td>activityCode</td><td>string(36)</td><td>comment of the ticket</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/GetStatusRequest'  
+      responses:
+        200:
+          description: SUCCESS
+          schema:
+            $ref: '#/definitions/GetStatusResponse'
+        206:
+          description: ERROR
+          schema:
+            type: object
+            properties:
+              responseStatus:
+                type: "string"
+                description:  Error response from server.
+              responseDescription:
+                type: "integer"
+                description:  Error response description from server.
+              ticketStatus:
+                type: "string"
+                description: trouble ticket current status.
+              responseCode:
+                type: "string"
+                description: response codes from server.
+              troubleReportID :
+                type: "string"
+                description: trouble ticket id.
+              ticketOpenDate :
+                type: string
+                description: trouble ticket id open date.  
+              
+  /modifyticket:
+    post:
+      summary: Update ticket request
+      description: This API will allow you to update a ticket for VPS circuits
+      operationId: updateRequestUsingPOST
+      
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true  
+        - in: "body"
+          name: "body"
+          description: >-
+              <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>description<br><span style="color:#d52b1e;">* required</span></td><td>string(256)</td><td>Trouble Information details specified by the customer.</td></tr><tr><td>externalId<br><span style="color:#d52b1e;">* required</span></td><td>string(36)</td><td>A String contains the source system generated requestId of trouble ticket.Max length is 36</td></tr><tr><td>severity</td><td>string</td><td>severity values will be in[0,1,2,3]. 0 = out of service ,1 = back in service,2 = service impairment,3 = non service affecting trouble</td></tr><tr><td>priority</td><td>string</td><td>priority values will be in[0,1,2,3]. 0 = undefined ,1 = minor,2 = major,3 = serious</td></tr><tr><td>ticketRelationship</td><td>object</td><td>A reference type. List of values which are mandatory from the customer to create the trouble ticket and having relation with the trouble ticket.</td></tr><tr><td>relatedEntity</td><td>object</td><td>A reference type contains list of related entity references. An entity that is related to the trouble ticket. The entity against which the trouble ticket is associated.</td></tr><tr><td>authorizationList</td><td>object</td><td>A reference type contains the authorization information related to trouble ticket like authentication person details & type of issue  dispatch/ test need to do etc.. details. (Optional).</td></tr><tr><td>escalationList</td><td>object</td><td>A reference type contains escalation details like level of escalation, date & time of escalation.(optional).</td></tr><tr><td>additionalDetails</td><td>object</td><td>A reference type contains additional details of trouble ticket.</td></tr><tr><td>sourceSystem</td><td>string</td><td>Third party support.(M) Ex:CX</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>Userid of the customer and its maxLength is 10</td></tr><tr><td>serviceProfile<br><span style="color:#d52b1e;">* required</span></td><td>string(8)</td><td>A String represents the following values  VzB/VzT. (M)</td></tr><tr><td>networkID<br><span style="color:#d52b1e;">* required</span></td><td>string(5)</td><td>A String contains network id of the customer.Length is 5 (M)</td></tr><tr><td>troubleReportID<br><span style="color:#d52b1e;">* required</span></td><td>string(64)</td><td>A String contains troublereportid of the customer. (M) </td></tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>A String contains account name of the customer.Max length is 4 (M)</td></tr><tr><td>managerContactName<br><span style="color:#d52b1e;">* required</span></td><td>string</td><td>A string represents Manager Contact name.(M)</td></tr><tr><td>managerContactPhone<br><span style="color:#d52b1e;">* required</span></td><td>number(18)</td><td>A long number represents Manager Contact Phone.(M)</td></tr><tr><td>aLocationAccessAddress</td><td>object</td><td>Alocation Access Address object</td></tr><tr><td>aLocationAccessPerson</td><td>object</td><td>Alocation Access Person object</td></tr><tr><td>aLocationAccessHours</td><td>object</td><td>Alocation Access Hours object</td></tr><tr><td>premisesName</td><td>string(64)</td><td>Premise name where network is installed and its maxLength is 64 </td></tr><tr><td>premisesAddress</td><td>object</td><td>premisesAddress</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civicAddress where network is installed and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city where network is installed and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state where network is installed and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip where network is installed and its maxLength is 64</td></tr><tr><td>name</td><td>string(64)</td><td>Name of ALocation Access Person and its maxLength is 64</td></tr><tr><td>phone</td><td>number(18)</td><td>phone of ALocation Access Person and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civic address of ALocation Access Person and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city of ALocation Access Person and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state of ALocation Access Person and its maxLength is 64</td></tr><tr><td>zip</td><td>string</td><td>zip of ALocation Access Person and its maxLength is 64</td></tr><tr><td>email</td><td>string</td><td>email of ALocation Access Person and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax of ALocation Access Person and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response of the ALocation Access Person and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager of user and its maxLength is 64</td></tr><tr><td>locationAccessHoursItem</td><td>array</td><td>locationAccessHoursItem</td></tr><tr><td>daysOfWeek</td><td>object</td><td>Circuit Access Hours Day</td></tr><tr><td>intervalsOfDay</td><td>object</td><td>intervalsOfDay</td></tr><tr><td>sunday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>monday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>tuesday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>wednesday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>thursday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>friday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>saturday</td><td>string</td><td>values will be in [true,false]</td></tr><tr><td>intervalsOfDay</td><td>object</td><td>circuit access time</td></tr><tr><td>intervalsOfDayItem</td><td>object</td><td>intervalsOfDayItem.&nbsp;</td></tr><tr><td>intervalStart</td><td>string</td><td>Circuit Access Hours Start Time and its format is hh:mm:ss</td></tr><tr><td>intervalEnd</td><td>string</td><td>Circuit Access Hours end Time and its format is hh:mm:ss</td></tr><tr><td>authorizationList</td><td>object</td><td>authorizationList</td></tr><tr><td>referredType</td><td>string</td><td>Authorization List Activity Type</td></tr><tr><td>authorizationItem</td><td>array</td><td>authorizationItem</td></tr><tr><td>state</td><td>string</td><td>values will be in [2,3]</td></tr><tr><td>type</td><td>object</td><td>type</td></tr><tr><td>authTime</td><td>DateTime Timestamp</td><td>authorization time and its format is YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>authPerson</td><td>object</td><td>group tag of person replying for authorization</td></tr><tr><td>afterHoursRepair</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>standby</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>afterHoursStandby</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>test</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>managerInitiatedTest</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>dispatch</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>noAccess</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>delayedMaintenance</td><td>string</td><td>values will be in[true,false]</td></tr><tr><td>release</td><td>string</td><td>release</td></tr><tr><td>deregulatedWork</td><td>string</td><td>deregulatedWork</td></tr><tr><td>name</td><td>string(64)</td><td>Authorization Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>string(18)</td><td>Authorization Person Reach TN and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager its maxLength is 64</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civicAddress and its maxLength is 64</td></tr><tr><td>city</td><td>string(64)</td><td>city and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip and its maxLength is 64</td></tr><tr><td>escalationList</td><td>object</td><td>escalationlist group</td></tr><tr><td>referredType</td><td>string</td><td>referredType</td></tr><tr><td>type</td><td>string</td><td>type</td></tr><tr><td>escalationItem</td><td>object</td><td>escalationItem</td></tr><tr><td>escTime</td><td>DateTime Timestamp</td><td>escalation time and its format:YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>requestPerson</td><td>object</td><td>Person requesting the Escalation</td></tr><tr><td>level</td><td>string</td><td>values will be in [0,1,2,3,4] i.e 0 = no escalation,1 = first level,2 = second level,3 = third level,4 = fourth level, and maxLenght is 1</td></tr><tr><td>name</td><td>string(64)</td><td>Escalation Request Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>number(18)</td><td>Escalation Request phone and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string</td><td>pager its maxLength is 64</td></tr><tr><td>referredType</td><td>string</td><td>referredType</td></tr><tr><td>type</td><td>string</td><td>type</td></tr><tr><td>troubleReportWindow</td><td>object</td><td>troubleReportWindow</td></tr><tr><td>troubleDetectionTime</td><td>DateTime Timestamp</td><td>troubleDetectionTime format: YYYY-MM-DDTHH:MM:SSZ GMT minLength: 14 maxLength:20</td></tr><tr><td>troubleReportStatusWindow</td><td>object</td><td>troubleReportStatusWindow</td></tr><tr><td>day</td><td>string</td><td>represents day and in between minimum: '0', maximum: '31'</td></tr><tr><td>hour</td><td>string</td><td>represents hours and in between minimum: '0', maximum: '23'</td></tr><tr><td>minute</td><td>string</td><td>represents minutes and in between minimum: '0', maximum: '59'</td></tr></tbody></table>
+              <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>updateesponse</td><td>object</td><td>A cancel response represents ticket status </td></tr><tr><td>rdnsSequenceItem</td><td>object Array</td><td>An object reference.</td></tr><tr><td>type</td><td>string</td><td>Values of the type is networkId,troubleReportID,accountName</td></tr><tr><td>assertion</td><td>string</td><td>Values of the corresponding type</td></tr><tr><td>exceptionList</td><td>object</td><td>Exception reference  of the ticket</td></tr><tr><td>tag</td><td>String(4)</td><td>a Number represents the error code</td></tr><tr><td>value</td><td>string(36)</td><td>Value represents the error message.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/ModifyTicketRequest'
+      responses:
+        200:
+          description: SUCCESS
+          schema:
+           $ref: '#/definitions/ModifyTicketResponse'
+        206:
+          description: ERROR
+          schema:
+           type: object
+           properties:
+              responseStatus:
+                type: string
+                description: Response Status
+                #Here the status of the response is populated with either SUCCESS/ERROR.
+              responseDescription:
+                type: string
+                description: Response Description
+              responseCode:
+                type: string
+                description: Response Code
+              updateResponse:
+                type: object
+                description: Object containing the response details from the system
+                properties:
+                    distinguishedName:
+                      type: object
+                      properties:
+                        rdnSequenceItem:
+                         type: array
+                         description: rdnSequenceItem
+                         items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: contains networkid/troubleReportID/accountName
+                              enum: [networkId,troubleReportID,accountName]
+                            assertion:
+                              type: string 
+                              description: value of corresponding type
+                            
+              exceptionList:
+                type: object
+                properties:
+                  tag:
+                    type: string
+                  value:
+                   type: string
+              
+  /cancelticket:
+    post:
+      summary: Cancel ticket request
+      description: ""
+      operationId: ""
+      tags:
+        - Service Assurance
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          type: string
+          required: true  
+        - in: "body"
+          name: "body"
+          description: >-
+            <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr> <td>description </td><td>String(256)</td><td>Trouble Cancellation Information details specified by the customer.</td></tr><tr><td>externalId<br><span style="color:#d52b1e;">* required</span></td><td>
+            string(36)</td><td>A String contains the source system generated requestId of trouble ticket.Max length is(M)</td></tr><tr><td>cancelRequestedByManager<br><span style="color:#d52b1e;">* required</span> </td><td>boolean</td><td>A Boolean value represents always true. If false,the system will generate the error.</td></tr><tr><td>troubleClearancePerson<br><span style="color:#d52b1e;">* required</span></td><td>object</td><td>troubleClearancePerson details</td></tr><tr><td>ticketRelationship<br><span style="color:#d52b1e;">* required</span></td><td>object</td><td>ticket Relationship</td></tr><tr><td>sourceSystem<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>Third party support.(M) Ex:CX</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>A String contains the userId of customer.(M)</td></tr><tr><td>serviceProfile<br><span style="color:#d52b1e;">* required</span></td><td>string(8)</td><td>A String represents the following values VzB/VzT. (M)</td></tr><tr><td>networkID<br><span style="color:#d52b1e;">* required</span></td><td>string(3)</td><td>A String contains network id of the customer.(M)</td></tr><tr><td>troubleReportID<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>Trouble ticket id</td></tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>A String contains account name of the customer.(M)</td></tr><tr><td>name</td><td>string(64)</td><td>Name of Person </td></tr><tr><td>phone</td><td>number(18)</td><td>phone of the Person</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email of s Person </td></tr><tr><td>fax</td><td>string(64)</td><td>fax of  Person  </td></tr><tr><td>response</td><td>string(64)</td><td>Response of the  Person </td></tr><tr><td>pager</td><td>string(64)</td><td>pager of user </td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civic address of the Person</td></tr><tr><td>city</td><td>string(64)</td><td>city of the Person </td></tr><tr><td>state</td><td>string(64)</td><td>state of the person </td></tr><tr><td>zip</td><td>string(64)</td><td>zip of  Person </td></tr></tbody></table>
+            <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>cancelResponse</td><td>object</td><td>A cancel response represents ticket status </td></tr><tr><td>rdnsSequenceItem</td><td>object Array</td><td>An object reference.</td></tr><tr><td>type</td><td>string</td><td>Values of the type is networkId,troubleReportID,accountName</td></tr><tr><td>assertion</td><td>string</td><td>Values of the corresponding type</td></tr><tr><td>exceptionList</td><td>object</td><td>Exception reference  of the ticket</td></tr><tr><td>tag</td><td>String(4)</td><td>a Number represents the error code</td></tr><tr><td>value</td><td>string(36)</td><td>Value represents the error message.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/CancelTroubleReportRequest'
+      responses:
+        '200':
+          description: SUCCESS
+          schema:
+            $ref: '#/definitions/CancelTroubleResponse'    
+        206:
+          description: ERROR
+          schema:
+           type: object
+           properties:
+              responseStatus:
+                type: string
+                description: Response Status
+                #Here the status of the response is populated with either SUCCESS/ERROR.
+              responseDescription:
+                type: string
+                description: Response Description
+              responseCode:
+                type: string
+                description: Response Code
+              cancelResponse:
+                type: object
+                description: Object containing the response details from the system
+                properties:
+                    rdnSequenceItem:
+                         type: array
+                         description: rdnSequenceItem
+                         items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: contains networkid/troubleReportID/accountName
+                              enum: [networkId,troubleReportID,accountName]
+                            assertion:
+                              type: string 
+                              description: value of corresponding type
+                            
+              exceptionList:
+                type: object
+                properties:
+                  tag:
+                    type: string
+                  value:
+                   type: string  
+  /escalate:
+    post:
+      summary: Escalate ticket request
+      description: This API will allow you to update a ticket for VPS circuits
+      operationId: EscalateRequestUsingPOST
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true  
+        - in: "body"
+          name: "body"
+          description: <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;">           <tr><td>description</td><td>String(256)</td><td>Trouble Escalation Information details specified by the customer.</td></tr><tr><td>externalId<br><span style="color:#d52b1e;">* required</span></td><td>string(36)</td><td>A String contains the source system generated requestId of trouble ticket.</td></tr><tr><td>ticketRelationship<br><span style="color:#d52b1e;">* required</span></td><td>object</td><td>ticket Relationship</td></tr><tr><td>escalationList</td><td>object</td><td>Escalation list of the ticket</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>A String contains the userId of customer.</td></tr><tr><td>serviceProfile<br><span style="color:#d52b1e;">* required</span></td><td>string(8)</td><td>A String represents the following values VzB/VzT. </td></tr><tr><td>networkID<br><span style="color:#d52b1e;">* required</span></td><td>string(3)</td><td>pecifies whether the circuit is of VZC/VZL type.</td></tr><tr><td>troubleReportID<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string contains trouble report id.</td></tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>Account Name of the customer</td></tr>
+              <tr><td>referredType</td><td>string</td><td>referredType</td></tr><tr><td>type</td><td>string</td><td>type</td></tr><tr><td>escalationItem</td><td>object</td><td>escalationItem</td></tr><tr><td>escTime<br><span style="color:#d52b1e;">* required</span></td><td>string(20)</td><td>escalation time and its format:YYYY-MM-DDTHH:MM:SSZ GMT</td></tr><tr><td>state<br><span style="color:#d52b1e;">* required</span></td><td>string(1)</td><td>state of the person and its maxLength is 1 .e.g.1=Requested</td></tr><tr><td>requestPerson</td><td>object</td><td>Person requesting the Escalation</td></tr><tr><td>level</td><td>string(1)</td><td>values will be in [0,1,2,3,4] i.e 0 = no escalation,1 = first level,2 = second level,3 = third level,4 = fourth level, and maxLenght is 1</td>
+               </tr><tr><td>name<br><span style="color:#d52b1e;">* required</span></td><td>string(64)</td><td>Escalation Request Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>string(18)</td><td>Escalation Request phone and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager its maxLength is 64</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civic address of tje Person and its maxLength is64</td></tr><tr><td>city</td><td>string(64)</td><td>city of the Person and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state of the person and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip of  Person and itsmaxLength is 64</td></tr></tbody></table>
+            <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>cancelResponse</td><td>object</td><td>A cancel response represents ticket status </td></tr><tr><td>rdnsSequenceItem</td><td>object Array</td><td>An object reference.</td></tr><tr><td>type</td><td>string</td><td>Values of the type is networkId,troubleReportID,accountName</td></tr><tr><td>assertion</td><td>string</td><td>Values of the corresponding type</td></tr><tr><td>exceptionList</td><td>object</td><td>Exception reference  of the ticket</td></tr><tr><td>tag</td><td>String(4)</td><td>a Number represents the error code</td></tr><tr><td>value</td><td>string(36)</td><td>Value represents the error message.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/EscalateTicketRequest'
+      responses:
+        '200':
+          description: SUCCESS
+          schema:
+           $ref: '#/definitions/EscalateTicketResponse'
+        206:
+         description: ERROR
+         schema:
+          type: object
+          properties:
+            responseStatus:
+              type: string
+              description: Response Status
+            responseDescription:
+              type: string
+              description: Response Description
+            responseCode:
+              type: string
+              description: Response Code
+            updateResponse:
+              type: object
+              description: Object containing the response details from the system
+              properties:
+                  distinguishedName:
+                    type: object
+                    properties:
+                      rdnSequenceItem:
+                       type: array
+                       description: rdnSequenceItem
+                       items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            description: contains networkid/troubleReportID/accountName
+                            enum: [networkId,troubleReportID,accountName]
+                          assertion:
+                            type: string 
+                            description: value of corresponding type
+                            
+                            
+            exceptionList:
+              type: object
+              properties:
+                tag:
+                  type: string
+                value:
+                 type: string
+  /addAttachment :
+    post:
+      summary: addAttachment 
+      description: This API will allow you to update a ticket for VPS circuits  
+      operationId: attachment
+      tags:
+        - Service Assurance
+      consumes:
+      - "application/octet-stream"
+      produces:
+      - "application/json"
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true
+        - name: troubleReportID
+          in: header
+          type: string
+          description: contains troubleReportID
+          required: true
+        - name: userId
+          in: header
+          description: contains userId
+          type: string
+          required: true
+        - name: accountName
+          in: header
+          description: contains account name
+          type: string
+          required: true          
+        - name: serviceProfile
+          in: header
+          description: A String represents the following VZB/VZT or VzB/VzT(M)
+          type: string
+          required: true
+        - name: filename
+          in: header
+          description: Attached file name. It is mandatory parameter 
+          type: string
+          required: true
+        - name: ContentType
+          in: header
+          description: Attached file content type. It is mandatory parameter. 
+          type: string
+          required: true
+        - name: fileFormat
+          in: header
+          description: Attached file format. It is mandatory parameter.
+          type: string
+          required: true
+        - name: sourceSystem
+          in: header
+          description: Third party support.
+          type: string
+          required: false
+        - name: FileDescription
+          in: header
+          description: FileDescription.
+          type: string
+        - name: FileSize
+          in: header
+          description: FileSize.
+          type: string
+        - name: StateCode
+          in: header
+          description: StateCode.
+          type: string
+        - in: body
+          name: file
+          description: "attachment"
+          required: true
+          schema:
+            $ref: "#/definitions/file"  
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/FileUploadResponse'
+  /getInventoryDetailsForCircuit :
+    post:
+      summary: getInventoryDetailsForCircuit  
+      description: This API will allow you to get inventory details for circuit.
+      operationId: ''
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true 
+        - in: "body"
+          name: "body"
+          description: <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>serviceIdentifier</td><td>String(100)</td><td>ServiceIdentifier is of any type mentioned below Circuit ID,Telephone Number,Toll Free Number,Service Instance ID
+            Minimum of 4 charsSTARTS WITH Applicable only when the wildcard character “*” is included.(M). E.g:32.XXXX.00000..NY</td></tr><tr><td>cleid</td><td>string(30)</td><td>Cleid of the circuit</td></tr><tr><td>sourceSystem</td><td>string(4)</td><td>source System of the request e.g.CX</td></tr><tr><td>productLongName</td><td>string(500)</td><td>productLongName can be submitted with single or multiple values separated by delimiter “|”(pipe symbol) (O) Ex:Access ,Toll FreeUNI|VOX</td></tr><tr><td>supplier</td><td>string(4)</td><td>Supplier can be submitted with single or multiple values separated by delimiter “|”(pipe symbol) (O) Ex:COMS,ProQuest,COMS|CABS</td></tr><tr><td>state</td><td>string(100)</td><td>state can be used with any of the input parameters. .EQUALS only means no partial search. (O) EX:NY</td></tr><tr><td>zip</td><td>string(200)</td><td>Zip can be used with any of the input parameter.EQUALS only means no partial search. (O)</td></tr><tr><td>country</td><td>string(100)</td><td>Country can be used with any of the input parameters. .EQUALS only means no partial search. (O)</td></tr><tr><td>pageNumber</td><td>NUMBER</td><td>pageNumber to speicify the page number. (O)</td></tr><tr><td>recordsPerPage</td><td>NUMBER</td><td>Number of records per page.by default it is 100 from the backend systems(CMDB).This cannot be more than 100. (O)</td></tr><tr><td>city</td><td>string(100)</td><td>city can be used with any of the input parameters. .EQUALS only means no partial search. (O)</td></tr></tbody></table>
+            <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string</td><td>A String contains Response.</td></tr><tr><td>troubleReportID</td><td>string</td><td>Trouble Report if of the ticket.</td></tr><tr><td>inventoryDetails</td><td>object Array</td><td>An object reference.</td></tr><tr><td>serviceIdentifier</td><td>string</td><td>service Identifier.</td></tr><tr><td>customerName</td><td>string</td><td>customer name </td></tr><tr><td>BAN</td><td>string</td><td>BAN of the circit.</td></tr><tr><td>location</td><td>object</td><td>Location details of  A/Z location.</td></tr><tr><td>address1</td><td>string</td><td>address1 of the location.</td></tr><tr><td>address2</td><td>string</td><td>address2 of the location.</td></tr><tr><td>city</td><td>string</td><td>city of the location.</td></tr><tr><td>state</td><td>string</td><td>state of the location.</td></tr><tr><td>zip </td><td>string</td><td>zip  of the location.</td></tr><tr><td>product</td><td>string</td><td>product mapped for the circuit.</td></tr><tr><td>circuitType</td><td>string</td><td>circuitType of the circuit either VzB/VzT.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/InventoryDetailsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/InventoryDetailsResponse'
+        
+        '206':
+         description: ERROR
+         schema:
+          type: object
+          properties:
+            responseStatus:
+              type: string
+              description: Response Status
+            responseDescription:
+              type: string
+              description: Response Description with error details
+            responseCode:
+              type: string
+              description: Response Code  
+            inventoryDetails:
+               type: string
+               description: Empty values as the response having error specified in description.
+  /closeOut :    
+    post:
+      summary: Close out ticket request  
+      description: This API will submit close out notification for trouble ticket.
+      operationId: ''
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description:  >-
+           <table style="width:100%" class="table_yaml  request"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>description</td><td>String(256)</td><td>Trouble Escalation Information details specified by the customer.</td></tr><tr><td>externalId<br><span style="color:#d52b1e;">* required</span></td><td>string(36)</td><td>A String contains the source system generated requestId of trouble ticket.</td></tr><tr><td>ticketRelationship<br><span style="color:#d52b1e;">* required</span></td><td>object</td><td>ticket Relationship</td></tr><tr><td>escalationList</td><td>object</td><td>Escalation list of the ticket</td></tr><tr><td>userId<br><span style="color:#d52b1e;">* required</span></td><td>string(10)</td><td>A String contains the userId of customer.</td></tr><tr><td>serviceProfile<br><span style="color:#d52b1e;">* required</span></td><td>string(8)</td><td>A String represents the following values  VzB/VzT. </td></tr><tr><td>networkID<br><span style="color:#d52b1e;">* required</span></td><td>string(3)</td><td>pecifies whether the circuit is of VZC/VZL type.</td></tr><tr><td>troubleReportID<br><span style="color:#d52b1e;">* required</span></td><td>string(32)</td><td>A string contains trouble report id.</td></tr><tr><td>accountName<br><span style="color:#d52b1e;">* required</span></td><td>string(4)</td><td>Account Name of the customer</td></tr>         <tr><td>closeOutVerification</td><td>int(1)</td><td>Valid values are 0-NoChange,1-Close,2-Reopen</td></tr><tr><td>troubleClearancePerson</td><td>object</td><td>troubleClearancePerson reference</td></tr><tr><td>name<br><span style="color:#d52b1e;">* required</span></td><td>string(64)</td><td> Request Person Name and its maxLength is 64</td></tr><tr><td>phone</td><td>string(18)</td><td> Request person phone and its maxLength is 18</td></tr><tr><td>loc</td><td>object</td><td>loc</td></tr><tr><td>email</td><td>string(64)</td><td>email and its maxLength is 64</td></tr><tr><td>fax</td><td>string(64)</td><td>fax and its maxLength is 64 </td></tr><tr><td>response</td><td>string(64)</td><td>Response and its maxLength is 64</td></tr><tr><td>pager</td><td>string(64)</td><td>pager its maxLength is 64</td></tr><tr><td>civicAddress</td><td>string(64)</td><td>civic address of tje Person and its maxLength is64</td></tr><tr><td>city</td><td>string(64)</td><td>city of the Person and its maxLength is 64</td></tr><tr><td>state</td><td>string(64)</td><td>state of the person and its maxLength is 64</td></tr><tr><td>zip</td><td>string(64)</td><td>zip of  Person and itsmaxLength is 64</td></tr></tbody></table>
+           
+           
+           <table style="width:100%" class="table_yaml  response"><thead><tr><th class="rtecenter" scope="col">Attribute Name</th><th class="rtecenter" scope="col">Type</th><th class="rtecenter" scope="col"> Description</th></tr></thead><tbody style="vertical-align:top;"><tr><td>responseStatus</td><td>String(10)</td><td>Response Status of the cancellation eg.SUCCESS,ERROR .</td></tr><tr><td>responseDescription</td><td>string(50)</td><td>Response Description</td></tr><tr><td>responseCode</td><td>string(3)</td><td>A String contains Response.</td></tr><tr><td>verifyRepairCompletionResponse</td><td>object</td><td>A cancel response represents ticket status </td></tr><tr><td>rdnsSequenceItem</td><td>object Array</td><td>An object reference.</td></tr><tr><td>type</td><td>string</td><td>Values of the type is networkId,troubleReportID,accountName</td></tr><tr><td>assertion</td><td>string</td><td>Values of the corresponding type</td></tr><tr><td>exceptionList</td><td>object</td><td>Exception reference  of the ticket</td></tr><tr><td>tag</td><td>String(4)</td><td>a Number represents the error code</td></tr><tr><td>value</td><td>string(36)</td><td>Value represents the error message.</td></tr></tbody></table>
+          required: true
+          schema:
+            $ref: '#/definitions/CloseOutRequest'
+      responses:
+        '200':
+          description: SUCCESS
+          schema:
+            $ref: '#/definitions/CloseOutResponse'  
+        '206':
+          description: ERROR
+          schema:
+            type: object
+            properties:
+              responseStatus:
+                type: string
+                description: Response Status
+                #Here the status of the response is populated with either SUCCESS/ERROR.
+              responseDescription:
+                type: string
+                description: Response Description
+              responseCode:
+                type: string
+                description: Response Code
+              verifyRepairCompletionResponse:
+                type: object
+                description: Object containing the response details from the system
+                properties:
+                    rdnSequenceItem:
+                        type: array
+                        description: rdnSequenceItem
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: contains networkid/account name/troubleReportID
+                              enum: [networkId,accountName,troubleReportID]
+                            assertion:
+                              type: string 
+                              description: value of corresponding type 
+              exceptionList:
+                type: object 
+                description: Object containing the error details from the response
+                properties:        
+                    tag:
+                      type: string 
+                      description: unique integer value of corresponding error
+                    value:
+                      type: string 
+                      description:  error description for error
+               
+  /addcomment:
+    post:
+      summary: addcomment to ticket 
+      description: This API will allow you to addcomment to a ticket for VPS circuits
+      operationId: addcomment RequestUsingPOST
+      tags:
+        - Service Assurance
+      parameters:
+        - name: authType
+          in: header
+          description: AuthType for the API.
+          type: string
+          default: 2WAYSSL
+          required: true
+        - name: apikey
+          in: header
+          description: Unique apikey for the service from the apigee.
+          type: string
+          required: true  
+        - in: "body"
+          name: "ticketRequest"
+          description: "addcomment Ticket Request"
+          required: true
+          schema:
+            $ref: '#/definitions/AddCommentRequest'
+      responses:
+        200:
+          description: SUCCESS
+          schema:
+           $ref: '#/definitions/AddCommentResponse'
+        206:
+          description: ERROR
+          schema:
+           type: object
+           properties:
+              responseStatus:
+                type: string
+                description: Response Status
+                #Here the status of the response is populated with either SUCCESS/ERROR.
+              responseDescription:
+                type: string
+                description: Response Description
+              responseCode:
+                type: string
+                description: Response Code
+              troubleReportID:
+                type: string
+                description: OroubleReportID details from the system
+            
+definitions:
+  CreateTicketRequest:
+    type: object
+    required:
+      - troubleType
+      - ticketRelationship
+      - description
+      - externalId
+      - issueType
+      - subType
+      - sourceSystem
+    properties:
+      sourceSystem:
+        type: string 
+        description: Third party support  ex:cx
+      description:
+        type: string
+        description: A String. Description of the trouble ticket.  
+      troubleType:
+        type: string
+        description: A String which describes the trouble type.
+      externalId:
+        type: string
+        description: A String contains the request id of trouble ticket. 
+      issueType:
+        type: string
+        description: An String indicates the issueType as Down-Hard,Degraded,Informational
+      subType:
+        type: string
+        description: An String indicates subType of the issue based on the issueType and alos the serviceProfile.
+      category:
+        type: string
+        description: An String represents category.It is used for VzB Mapping.
+        
+      type:
+        type: string
+        description: An String represents type.It is used for VzB Mapping.
+      customerRefNumber:
+       type: string
+       description: A String represents  for customer reference.(o) Max(15).      
+      severity:
+        type: string
+        description: An Integer. Indicate the implication of the issue on the expected functionality.
+        enum: [0,1,2,3]
+      priority: 
+        type: string
+        description: An Integer. The priority of the trouble ticket and how quickly the issue can be resolved.
+        enum: [0,1,2,3]
+      ticketRelationship:
+         type: object
+         description: A reference type. List of values which are mandatory from the customer to create the trouble ticket and having relation with the trouble ticket.
+         required:
+            - userId
+            - serviceProfile
+            - networkID
+            - serviceID
+            - accountName
+            - managerContactName
+            - managerContactPhone
+         properties:
+             userId:
+                 type: string
+                 description: A String contains the userId of customer. 
+                 maxLength: 10
+             serviceProfile:
+                 type: string
+                 
+                 description: A String contains the service profile information of customer.
+                 maxLength: 8
+             networkID:
+                 type: string
+                 description: A String contains network id of the customer.
+                 maxLength: 2
+             serviceID:
+                 type: string
+                 description: A String contains service id of the customer.
+                 maxLength: 64
+             accountName:
+                 type: string
+                 description: A String contains account name of the customer.
+                 maxLength: 4
+             managerContactName:
+                  type: string
+                  description: Customer Contact Person Name
+                  maxLength: 64 
+             managerContactPhone:
+                  type: string 
+                  description: Customer Contact Person phone
+                  maxLength: 18
+      relatedEntity:
+          type: object
+          description: A reference type contains list of related entity references. An entity that is related to the trouble ticket. The entity against which the trouble ticket is associated.
+          properties:
+              aLocationAccessAddress:
+                  type: object
+                  description: A String contains customer address details.
+                  properties:
+                      premisesName:
+                          type: string
+                          maxLength: 64
+                          description: A String indicates the name of the premises.
+                      premisesAddress:
+                          type: object
+                          description: A reference indicates type(class) of the trouble ticket.
+                          properties:
+                              civicAddress:
+                                  type: string
+                                  description: A String  represent the address details.
+                                  maxLength: 64
+                              city:
+                                  type: string
+                                  description: A String represents name of the city.
+                                  maxLength: 64
+                              state:
+                                  type: string
+                                  description: A String represents name of the state.
+                                  maxLength: 64
+                              zip:
+                                  type: string
+                                  description: A Number represents the zip value.
+                                  maxLength: 64                                  
+              aLocationAccessPerson:
+                  type: object 
+                  description: A String contains customer details like name & contact number.
+                  properties:                 
+                      name:
+                          type: string
+                          description: A String indicates the name of the Access Person
+                          maxLength: 64                          
+                      phone:
+                          type: string
+                          description: A String indicates type(class) of the trouble ticket.
+                          maxLength: 18
+                      loc:
+                          type: object
+                          description: A reference type contains the address,city,state and zip.
+                          properties:
+                              civicAddress:
+                                  type: string
+                                  description: A String  represent the address details.
+                                  maxLength: 64
+                              city:
+                                  type: string
+                                  description: A String represents name of the city.
+                                  maxLength: 64
+                              state:
+                                  type: string
+                                  description:  A String represents name of the state.
+                                  maxLength: 64
+                              zip:
+                                  type: string
+                                  description: A Number represents the zip value.
+                                  maxLength: 64
+                      email:
+                          type: string
+                          maxLength: 64
+                          format: email
+                          description: A string represents the email id
+                      fax:
+                          type: string 
+                          maxLength: 64 
+                          description: A Number represents the fax number.                  
+                      response:
+                          type: string
+                          maxLength: 64
+                          description: A string represents response.
+                      pager:
+                          type: string 
+                          maxLength: 64
+                          description: A Number represents pager number. 
+              
+              premisesAccessHours:
+                  type: object
+                  properties:
+                      daysOfWeek:
+                          type: object
+                          properties:
+                            days:
+                              type: object
+                              description: Premises Access Hours Day
+                              properties:
+                                sunday:
+                                  type: boolean
+                                monday:
+                                  type: boolean
+                                    
+                                tuesday:
+                                  type: boolean
+                                
+                                wednesday:
+                                  type: boolean
+                                
+                                thursday:
+                                  type: boolean
+                                
+                                friday:
+                                  type: boolean
+                                
+                                saturday:
+                                  type: boolean     
+                                
+                            timeOfDays:
+                              type: object
+                              description: Premises access time
+                              properties:
+                                mondayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                mondayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                tuesdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                tuesdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                wednesdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                wednesdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                    
+                                thursdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                thursdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                fridayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                fridayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                saturdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                saturdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+                                sundayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Premises Access Hours Start Time in 24hours format
+                                sundayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Premises Access Hours end Time in 24hours Format
+              circuitAccessHours:
+                  type: object
+                  properties:
+                      circuitAccessDateforEtms:
+                       type: string
+                       description: A Date of YYYY-MM-DD HH:MM format specifies the date for circuit access .
+                                    This attribute is for VzB types.Time is nin 24hours format.
+                       format: YYYY-MM-DD HH:MM
+                      timeZone:
+                       type: string
+                       description: Time zone format Ex:GMT, This attribute is for VzB type.
+                      daysOfWeek:
+                          type: object
+                          properties:
+                            
+                            
+                            days:
+                              type: object
+                              description: Circuit Access Hours Day
+                              properties:
+                                sunday:
+                                  type: boolean
+                                monday:
+                                  type: boolean
+                                    
+                                tuesday:
+                                  type: boolean
+                                
+                                wednesday:
+                                  type: boolean
+                                
+                                thursday:
+                                  type: boolean
+                                
+                                friday:
+                                  type: boolean
+                                
+                                saturday:
+                                  type: boolean     
+                                
+                            timeOfDays:
+                              type: object
+                              description: Circuit access time
+                              properties:
+                                mondayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                mondayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                tuesdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                tuesdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                wednesdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                wednesdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                    
+                                thursdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                thursdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                fridayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                fridayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                saturdayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                saturdayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format
+                                sundayFrom:
+                                    type: string
+                                    format: HH:MM
+                                    description: Circuit Access Hours Start Time in 24hours format
+                                sundayTo:
+                                    type: string                        
+                                    format: HH:MM
+                                    description: Circuit Access Hours end Time in 24hours Format                      
+                                    
+      authorizationList:
+          type: object
+          description: A reference type contains the authorization information related to trouble ticket like authentication person details & type of issue  dispatch/ test need to do etc.. details. 
+          properties:
+              
+              authorizationItem:
+                  type: array
+                  description: This field contains authorization details like authentication person details & type of issue dispatch/ test need to do etc.. details.
+                  items:
+                    type: object
+                    properties:
+                        state:
+                            type: string
+                            enum: [2,3]
+                        type:
+                            type: object
+                            properties:
+                                afterHoursRepair:
+                                    type: boolean
+                                    
+                                standby:
+                                    type: boolean
+                                    
+                                afterHoursStandby:
+                                    type: boolean
+                                    
+                                test:
+                                    type: boolean
+                                    
+                                managerInitiatedTest:
+                                    type: boolean
+                                    
+                                dispatch:
+                                    type: boolean
+                                    
+                                noAccess:
+                                    type: boolean
+                                    
+                                delayedMaintenance:
+                                    type: boolean 
+                                    
+                                release:
+                                    type: boolean 
+                                deregulatedWork:
+                                    type: boolean
+                                powerEquipment:
+                                    type: boolean
+                        authTime:
+                            type: string
+                            format: YYYY-MM-DDTHH:MM GMT
+                            description: A datetime represents the authorisation time.
+                        authPerson:
+                            type: object
+                            description: A reference represents the autperson details.
+                            properties:
+                                name:
+                                    type: string 
+                                    description: Authorization  Person Name
+                                    maxLength: 64
+                                phone:
+                                    type: string
+                                    description: A String indicates type(class) of the trouble ticket.
+                                    maxLength: 18
+                                loc:
+                                    type: object  
+                                    properties:
+                                        civicAddress:
+                                            type: string
+                                            maxLength: 64
+                                            description: A reference type contains the address,city,state and zip
+                                        city:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the city.
+                                        state:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the state.
+                                        zip:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the zip value.
+                                email:
+                                    type: string
+                                    maxLength: 64
+                                    description: A string represents the email id
+                                    format: email
+                                fax:
+                                    type: string
+                                    maxLength: 64 
+                                    description: A Number represents the fax number.                            
+                                response:
+                                    type: string
+                                    maxLength: 64
+                                    description: A string represents response.
+                                pager:
+                                    type: string
+                                    maxLength: 64  
+                                    description: A Number represents pager number.                                                               
+      escalationList:
+          type: object
+          description: A reference type contains escalation details like level of escalation, date & time of escalation.
+          properties:
+              
+              escalationItem:
+                  type: object
+                  properties:
+                        escTime:
+                            type: string
+                            description: escalation time
+                            format: YYYY-MM-DD THH:MM 
+                        requestPerson:
+                            type: object
+                            description: Person requesting the Escalation
+                            properties:
+                                name:
+                                    type: string
+                                    description: Escalation Request  Person Name 
+                                    maxLength: 64    
+                                phone:
+                                    type: string 
+                                    description: Escalation Request  phone
+                                    maxLength: 18
+                                loc:
+                                    type: object  
+                                    properties:
+                                        civicAddress:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the Address.
+                                        city:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the city.
+                                        state:
+                                            type: string
+                                            maxLength: 64
+                                            description: A String represents name of the staet.
+                                        zip:
+                                            type    : string
+                                            maxLength: 64
+                                            description: A String represents name of the zip value.
+                                email:
+                                    type: string
+                                    maxLength: 64
+                                    description: A string represents the email id
+                                    format: email
+                                fax:
+                                    type: string
+                                    maxLength: 64
+                                    description: A Number represents the fax number.                             
+                                response:
+                                    type: string
+                                    maxLength: 64
+                                    description:  A string represents response.                                    
+                                pager:
+                                    type: string
+                                    maxLength: 64
+                                    description: A Number represents pager number.     
+                                level:
+                                    type: string
+                                    maxLength: 1
+                                    enum: [0,1,2,3,4]
+      
+      additionalDetails:
+          type: object
+          description: A reference type contains additional details of trouble ticket.
+          properties:
+              forwardTo:
+                type: string
+                description: This is for VzB Type .
+              issueNoticeTime:
+                type: object
+                properties:
+                  noticeTime:
+                    type: string
+                    format: YYYY-MM-DD HH:MM
+                    minLength: 14
+                    maxLength: 20
+                  timeZone:
+                      type: string
+              telephoneDetails:
+                type: object
+                properties:
+                  calledFrom:
+                    type: string
+                  calledTo:
+                    type: string
+                  detectionTime:
+                    type: string
+                    format: YYYY-MM-DD HH:MM
+                    minLength: 14
+                    maxLength: 20
+                  timeZone:
+                      type: string
+                  description:
+                      type: string
+                      
+                  
+              
+              troubleReportWindow:
+                  type: object
+                  properties:
+                      troubleDetectionTime:
+                          type: string
+                          format: YYYY-MM-DD HH:MM
+                          minLength: 14
+                          maxLength: 20
+                      troubleReportStatusWindow:
+                          type: object
+                          properties:
+                              day:
+                                  type: string
+                                  minimum: 0
+                                  maximum: 31
+                              hour:
+                                  type: string
+                                  minimum: 0
+                                  maximum: 23
+                              minute:
+                                  type: string
+                                  minimum: 0
+                                  maximum: 59
+  CreateTicketResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+        #Here the status of the response is populated with either SUCCESS/ERROR.
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      externalId:
+        type: string
+        description: External id from the source system.
+      createResponse:
+        type: object
+        description: Object containing the response details from the system
+        properties:
+            troubleReportID:
+                type: string
+                description: Trouble Report Id
+            receivedTime:
+                type: string
+                description: Received Time
+            agentContactPerson:
+              type: object
+              description: Agent contact person
+              properties:
+                  name:
+                    type: string
+                    description: Name of the contact person
+                  phone:
+                    type: string
+                    description: Phone of the Contact person
+            rdnSequenceItem:
+                type: array
+                description: rdnSequenceItem
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: contains networkid/serviceid/account name
+                      enum: [networkId,serviceId,accountName]
+                    assertion:
+                      type: string 
+                      description: value of corresponding type
+  
+  GetStatusRequest:
+    type: object
+    required:
+     - sourceSystem
+     - userId
+     - serviceProfile
+     - troubleReportID
+     - accountName
+    properties:
+      sourceSystem:
+        type: "string"
+        description: third party support. Ex:CX  
+      troubleReportID:
+        type: "string"
+        description:  User need to send ticket request. It is mandatory.
+      userId:  
+        type: "string"
+        description: Customer need to send Userid.
+      accountName:
+        type: "string"
+        description: Customer need to send accountName(ACNA). 
+      serviceProfile:
+        type: "string"
+        description: A String represents the following values VZB/VZT or VzB/VzT.(M) 
+       
+        
+  GetStatusResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: "string"
+        description:  response from server.
+      responseDescription:
+        type: "integer"
+        description:  response description from server.
+      responseCode":
+        type: "string"
+        description: response code from server.
+      ticketStatus:
+        type: "string"
+        description: trouble ticket current status.
+      responseCode:
+        type: "string"
+        description: response codes from server.
+      ticketOpenDate :
+        type: string
+        description: trouble ticket id open date.  
+      troubleReportID :
+        type: "string"
+        description: trouble ticket id.
+      activityLog:
+        type: array
+        items:
+          type: object
+          properties:
+            comment:
+              type: string
+              description: ticket comment inforamtion .
+            createTime:
+              type: "string"
+              format: "date-time"
+            activityCode:
+              type: string
+              description: activityCode comments.
+                               
+  ModifyTicketRequest:
+    type: object
+    required:
+      - externalId
+      - ticketRelationship
+      - description
+      - sourceSystem
+      
+    properties:
+      sourceSystem:
+        type: string 
+        description: Third party support  ex:cx
+      serviceID: 
+        type: string 
+        description: A String contains service id of the customer eg:NY
+      description:
+        type: string
+        description: A String. Description of the trouble ticket.
+      externalId:
+        type: string
+        description: A String which contains Request Id to be updated.
+        maxLength: 36
+      severity:
+        type: string
+        description: >-
+          An Integer. Indicate the implication of the issue on the expected
+          functionality.
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+      priority:
+        type: string
+        description: >-
+          An Integer. The priority of the trouble ticket and how quickly the
+          issue can be resolved.
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+      ticketRelationship:
+        type: object
+        description: >-
+          A reference type. List of values which are mandatory from the customer
+          to create the trouble ticket and having relation with the trouble
+          ticket.
+        required:
+            - userId
+            - serviceProfile
+            - networkID
+            - serviceID
+            - troubleReportID
+            - accountName
+            - managerContactName
+            - managerContactPhone  
+        properties:
+          userId:
+            type: string
+            description: A String contains the userId of customer.
+            maxLength: 10
+          serviceProfile:
+            type: string
+            enum:
+              - CLEC
+              - Carrier
+            description: A String contains the service profile information of customer.
+            maxLength: 8
+          networkID:
+            type: string
+            description: A String contains network id of the customer.
+          serviceID:
+            type: string
+            description: A String contains service id of the customer.
+            maxLength: 64
+          troubleReportID:
+            type: string
+            description: A String contains Trouble Report ID.
+            maxLength: 32
+          accountName:
+            type: string
+            description: A String contains account name of the customer.
+            maxLength: 4
+          managerContactName:
+            type: string
+            description: Customer Contact Person Name
+            maxLength: 64
+          managerContactPhone:
+            type: string
+            description: Customer Contact Person phone
+            maxLength: 18
+      relatedEntity:
+        type: object
+        description: A reference type contains list of related entity references. An entity
+          that is related to the trouble ticket. The entity against which the
+          trouble ticket is associated.
+        properties:
+          aLocationAccessAddress:
+            type: object
+            description: A String contains customer address details.
+            properties:
+              premisesName:
+                type: string
+                maxLength: 64
+                description: A String indicates the name of the premises.
+              premisesAddress:
+                type: object
+                description: A reference indicates type(class) of the trouble ticket.
+                properties:
+                  civicAddress:
+                    type: string
+                    description: A String  represent the address details.
+                    maxLength: 64
+                  city:
+                    type: string
+                    description: A String represents name of the city.
+                    maxLength: 64
+                  state:
+                    type: string
+                    description: A String represents name of the state.
+                    maxLength: 64
+                  zip:
+                    type: string
+                    description: A Number represents the zip value.
+                    maxLength: 64
+          aLocationAccessPerson:
+            type: object
+            description: A String contains customer details like name & contact number.
+            properties:
+              name:
+                type: string
+                description: A String indicates the name of the Access Person
+                maxLength: 64
+              phone:
+                type: string
+                description: A String indicates type(class) of the trouble ticket.
+                maxLength: 18
+              loc:
+                type: object
+                description: 'A reference type contains the address,city,state and zip.'
+                properties:
+                  civicAddress:
+                    type: string
+                    description: A String  represent the address details.
+                    maxLength: 64
+                  city:
+                    type: string
+                    description: A String represents name of the city.
+                    maxLength: 64
+                  state:
+                    type: string
+                    description: A String represents name of the state.
+                    maxLength: 64
+                  zip:
+                    type: string
+                    description: A Number represents the zip value.
+                    maxLength: 64
+              email:
+                type: string
+                maxLength: 64
+                format: email
+                description: A string represents the email id
+              fax:
+                type: string
+                maxLength: 64
+                description: A Number represents the fax number.
+              response:
+                type: string
+                maxLength: 64
+                description: A string represents response.
+              pager:
+                type: string
+                maxLength: 64
+                description: A Number represents pager number.
+          alocationAccessHours:
+            type: object
+            properties:
+              locationAccessHoursItem:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    daysOfWeek:
+                      type: object
+                      description: Circuit Access Hours Day
+                      properties:
+                        sunday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        monday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        tuesday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        wednesday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        thursday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        friday:
+                          type: string
+                          enum:
+                            - true
+                            - false
+                        saturday:
+                          type: boolean
+                          enum:
+                            - true
+                            - false
+                    intervalsOfDay:
+                      type: object
+                      description: circuit access time
+                      properties:
+                        intervalsOfDayItem:
+                          type: object
+                          properties:
+                            intervalStart:
+                              type: string
+                              format: 'hh:mm:ss'
+                              description: Circuit Access Hours Start Time
+                            intervalEnd:
+                              type: string
+                              format: 'hh:mm:ss'
+                              description: Circuit Access Hours end Time
+      authorizationList:
+        type: object
+        description: >-
+          A reference type contains the authorization information related to
+          trouble ticket like authentication person details & type of issue 
+          dispatch/ test need to do etc.. details.
+        properties:
+          referredType:
+            type: string
+            description: A String indicates the (class) type of place. (authorizationItem)
+          type:
+            type: string
+            description: A String indicates type(class) of the trouble ticket.
+          authorizationItem:
+            type: array
+            description: >-
+              This field contains authorization details like authentication
+              person details & type of issue dispatch/ test need to do etc..
+              details.
+            items:
+              type: object
+              properties:
+                state:
+                  type: string
+                  enum:
+                    - 2
+                    - 3
+                type:
+                  type: object
+                  properties:
+                    afterHoursRepair:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    standby:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    afterHoursStandby:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    test:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    managerInitiatedTest:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    dispatch:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    noAccess:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    delayedMaintenance:
+                      type: string
+                      enum:
+                        - true
+                        - false
+                    release:
+                      type: string
+                    deregulatedWork:
+                      type: string
+                authTime:
+                  type: string
+                  format: 'YYYY-MM-DDTHH:MM:SSZ GMT'
+                  description: A datetime represents the authorisation time.
+                authPerson:
+                  type: object
+                  description: A reference represents the autperson details.
+                  properties:
+                    name:
+                      type: string
+                      description: Authorization  Person Name
+                      maxLength: 64
+                    phone:
+                      type: string
+                      description: A String indicates type(class) of the trouble ticket.
+                      maxLength: 18
+                    loc:
+                      type: object
+                      properties:
+                        civicAddress:
+                          type: string
+                          maxLength: 64
+                          description: >-
+                            A reference type contains the address,city,state and
+                            zip
+                        city:
+                          type: string
+                          maxLength: 64
+                          description: A String represents name of the city.
+                        state:
+                          type: string
+                          maxLength: 64
+                          description: A String represents name of the state.
+                        zip:
+                          type: string
+                          maxLength: 64
+                          description: A String represents name of the zip value.
+                    email:
+                      type: string
+                      maxLength: 64
+                      description: A string represents the email id
+                      format: email
+                    fax:
+                      type: string
+                      maxLength: 64
+                      description: A Number represents the fax number.
+                    response:
+                      type: string
+                      maxLength: 64
+                      description: A string represents response.
+                    pager:
+                      type: string
+                      maxLength: 64
+                      description: A Number represents pager number.
+      escalationList:
+        type: object
+        description: >-
+          A reference type contains escalation details like level of escalation,
+          date & time of escalation.
+        properties:
+          referredType:
+            type: string
+          type:
+            type: string
+          escalationItem:
+            type: object
+            properties:
+              escTime:
+                type: string
+                description: escalation time
+                format: 'YYYY-MM-DDTHH:MM:SSZ GMT'
+              requestPerson:
+                type: object
+                description: Person requesting the Escalation
+                properties:
+                  name:
+                    type: string
+                    description: Escalation Request  Person Name
+                    maxLength: 64
+                  phone:
+                    type: string
+                    description: Escalation Request  phone
+                    maxLength: 18
+                  loc:
+                    type: object
+                    properties:
+                      civicAddress:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the Address.
+                      city:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the city.
+                      state:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the staet.
+                      zip:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the zip value.
+                  email:
+                    type: string
+                    maxLength: 64
+                    description: A string represents the email id
+                    format: email
+                  fax:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents the fax number.
+                  response:
+                    type: string
+                    maxLength: 64
+                    description: A string represents response.
+                  pager:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents pager number.
+                  level:
+                    type: string
+                    maxLength: 1
+                    enum:
+                      - 0
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+      additionalDetails:
+        type: object
+        description: A reference type contains additional details of trouble ticket.
+        properties:
+          referredType:
+            type: string
+          type:
+            type: string
+          troubleReportWindow:
+            type: object
+            properties:
+              troubleReportStatusWindow:
+                type: object
+                properties:
+                  day:
+                    type: string
+                    minimum: 0
+                    maximum: 31
+                  hour:
+                    type: string
+                    minimum: 0
+                    maximum: 23
+                  minute:
+                    type: string
+                    minimum: 0
+                    maximum: 59
+  ModifyTicketResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+        #Here the status of the response is populated with either SUCCESS/ERROR.
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      updateResponse:
+        type: object
+        description: Object containing the response details from the system
+        properties:
+            distinguishedName:
+              type: object
+              properties:
+                rdnSequenceItem:
+                 type: array
+                 description: rdnSequenceItem
+                 items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: contains networkid/troubleReportID/accountName
+                      enum: [networkId,troubleReportID,accountName]
+                    assertion:
+                      type: string 
+                      description: value of corresponding type
+                    
+      
+                    
+                      
+  CancelTroubleReportRequest:    
+    type: "object"
+    required:
+            - externalId
+            - description
+            - ticketRelationShip
+            - cancelRequestedByManager
+            - sourceSystem
+            
+    properties:
+      sourceSystem :
+        type: string
+        description: "SourceSystem"
+      externalId:
+        type: "string"
+        description: "Request id of the ticket"
+      description:
+        type: string
+        description: "Description of the ticket"
+      
+      ticketRelationShip:
+          type: "object"
+          required:
+            - userId
+            - serviceProfile
+            - networkID
+            - serviceID
+            - troubleReportID
+            - accountName
+          properties:
+             userId:
+                 type: string
+                 description: A String contains the userId of customer. 
+                 maxLength: 10
+             serviceProfile:
+                 type: string
+                 
+                 description: A String contains the service profile information of customer.
+                 maxLength: 8
+             networkID:
+                 type: string
+                 description: A String contains network id of the customer.
+             serviceID:
+                 type: string
+                 description: A String contains service id of the customer.  
+             accountName:
+                 type: string
+                 description: A String contains account name of the customer.
+                 maxLength: 64
+             troubleReportID:
+                 type: string
+                 description: A string contains trouble report id.
+      cancelRequestedByManager: 
+         type: boolean
+         default: true
+         description: A boolean value always true,Error will generate if the value is false.
+      troubleClearancePerson:
+                  type: object 
+                  description: A String contains customer details like name & contact number.
+                  properties:                 
+                      name:
+                          type: string
+                          description: A String indicates the name of the Access Person
+                          maxLength: 64                          
+                      phone:
+                          type: string
+                          description: A String indicates type(class) of the trouble ticket.
+                          maxLength: 18
+                      loc:
+                          type: object
+                          description: A reference type contains the address,city,state and zip.
+                          properties:
+                              civicAddress:
+                                  type: string
+                                  description: A String  represent the address details.
+                                  maxLength: 64
+                              city:
+                                  type: string
+                                  description: A String represents name of the city.
+                                  maxLength: 64
+                              state:
+                                  type: string
+                                  description:  A String represents name of the state.
+                                  maxLength: 64
+                              zip:
+                                  type: string
+                                  description: A Number represents the zip value.
+                                  maxLength: 64
+                      email:
+                          type: string
+                          maxLength: 64
+                          format: email
+                          description: A string represents the email id
+                      fax:
+                          type: string 
+                          maxLength: 64 
+                          description: A Number represents the fax number.                  
+                      response:
+                          type: string
+                          maxLength: 64
+                          description: A string represents response.
+                      pager:
+                          type: string 
+                          maxLength: 64
+                          description: A Number represents pager number.   
+         
+  CancelTroubleResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+        #Here the status of the response is populated with either SUCCESS/ERROR.
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      cancelResponse:
+        type: object
+        description: Object containing the response details from the system
+        properties:
+            distinguishedName:
+              type: object
+              properties:
+                rdnSequenceItem:
+                 type: array
+                 description: rdnSequenceItem
+                 items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: contains networkid/troubleReportID/accountName
+                      enum: [networkId,troubleReportID,accountName]
+                    assertion:
+                      type: string 
+                      description: value of corresponding type
+                    
+                        
+                      
+  EscalateTicketRequest:
+    type: object
+    required:
+      - externalId
+      - ticketRelationship
+      - description
+      - sourceSystem 
+    properties:
+      sourceSystem:
+        type: string 
+        description: Third party support  ex:cx
+      description:
+        type: string
+        description: A String. Description of the trouble ticket.
+      externalId:
+        type: string
+        description: A String which contains Request Id to be updated.
+        maxLength: 36
+      ticketRelationship:
+        type: object
+        description: >-
+          A reference type. List of values which are mandatory from the customer
+          to escalte the trouble ticket and having relation with the trouble
+          ticket.
+        required:
+            - userId
+            - serviceProfile
+            - networkID
+            - serviceID
+            - troubleReportID
+            - accountName
+            
+        properties:
+          userId:
+            type: string
+            description: A String contains the userId of customer.
+            maxLength: 10
+          serviceProfile:
+            type: string
+            enum:
+              - CLEC/Carrier
+              - VZB/VZT
+              
+            description: A String contains the service profile information of customer.
+            maxLength: 8
+          
+          networkID:
+            type: string
+            description: A String contains network id of the customer.
+            maxLength: 2
+          serviceID:
+            type: string
+            description: A String contains service id of the customer. 
+            maxLength: 64
+          troubleReportID:
+            type: string
+            description: A String contains Trouble Report ID.
+            maxLength: 32
+          accountName:
+            type: string
+            description: A String contains account name of the customer.
+            maxLength: 4
+          
+      escalationList:
+        type: object
+        description: >-
+          A reference type contains escalation details like level of escalation,
+          date & time of escalation.
+        properties:
+          referredType:
+            type: string
+          type:
+            type: string
+          escalationItem:
+            type: object
+            properties:
+              escTime:
+                type: string
+                description: escalation time
+                format: 'YYYY-MM-DDTHH:MM:SSZ GMT'
+              requestPerson:
+                type: object
+                description: Person requesting the Escalation
+                properties:
+                  name:
+                    type: string
+                    description: Escalation Request  Person Name
+                    maxLength: 64
+                  phone:
+                    type: string
+                    description: Escalation Request  phone
+                    maxLength: 18
+                  loc:
+                    type: object
+                    properties:
+                      civicAddress:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the Address.
+                      city:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the city.
+                      state:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the staet.
+                      zip:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the zip value.
+                  email:
+                    type: string
+                    maxLength: 64
+                    description: A string represents the email id
+                    format: email
+                  fax:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents the fax number.
+                  response:
+                    type: string
+                    maxLength: 64
+                    description: A string represents response.
+                  pager:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents pager number.
+              level:
+                    type: string
+                    maxLength: 1
+                    enum:
+                      - 0
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+  EscalateTicketResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      updateResponse:
+        type: object
+        description: Object containing the response details from the system
+        properties:
+            distinguishedName:
+              type: object
+              properties:
+                rdnSequenceItem:
+                 type: array
+                 description: rdnSequenceItem
+                 items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: contains networkid/troubleReportID/accountName
+                      enum: [networkId,troubleReportID,accountName]
+                    assertion:
+                      type: string 
+                      description: value of corresponding type
+                      
+                      
+                          
+  
+  FileUploadResponse:
+    type: object
+    properties:
+      fileName:
+        type: string
+      responseCode:
+        type: string
+      responseDescription:
+        type: string
+      responseStatus:
+        type: string
+      troubleReportID:
+        type: string
+  file:
+    type: "object"                      
+    
+  InventoryDetailsRequest:
+   type: object
+   properties:
+    serviceIdentifier:
+      type: string  
+      maxLength: 100
+      description: ServiceIdentifier is of any type like Circuit ID,Telephone Number,Toll Free Number,Service Instance ID .Minimum of 4 chars STARTS WITH Applicable only when the wildcard character “*” is included.(M)
+
+    cleid:
+      type: string
+      maxLength: 30
+      description: A String represents the CLE Id.Customer Legal Entity.(M)
+    productLongName:
+      type: string
+      maxLength: 500
+      description: productLongName can be submitted with single or multiple values separated by delimiter “|”              (pipe symbol) (O).
+    supplier:
+      type: string
+      maxLength: 100
+      description: Supplier can be submitted with single or multiple values separated by delimiter “|”(pipe symbol) (O)
+    city:
+      type: string
+      maxLength: 100
+      description: A ServiceTypeIDentifier specifies the ServiceInstanceId.
+    state:
+      type: string
+      maxLength: 100
+      description: A ServiceTypeIDentifier specifies the ServiceInstanceId.
+    country:
+      type: string
+      maxLength: 100
+      description: Country can be used with any of the input parameters.EQUALS only means no partial search. (O)
+    zip:
+      type: string
+      maxLength: 200
+      description: Zip can be used with any of the input parameter.EQUALS only means no partial search. (O)
+    pageNumber:
+      type: string
+      maxLength: 50
+      description: pageNumber to speicify the page number. (O)
+    recordsPerPage:
+      type: string
+      maxLength: 50
+      description: Number of records per page.by default it is 100 from the backend systems(CMDB).This cannot be more than 100. (O)
+    sourceSystem:  
+      type: string
+      maxLength: 500
+      description: Source system(CX)(M).
+  
+  InventoryDetailsResponse:
+    type: object
+    properties:
+     
+      responseCode:
+        type: string
+      responseDescription:
+        type: string
+      responseStatus:
+        type: string
+      inventoryDetails:
+              type: array
+              description: An array of records related to inventory for circuits.
+              items:    
+                  type: object
+                  properties:
+                      serviceIdentifier:
+                        type: string
+                        maxLength: 500
+                        description: A ServiceTypeIDentifier specifies the ServiceInstanceId.
+                      serviceInstanceId:
+                        type: string
+                        maxLength: 500
+                        description: A id represents the service instance.
+                        
+                      customerName:
+                        type: string
+                        maxLength: 100
+                        description: A String represents customer name .
+                      ban:
+                        type: string
+                        maxLength: 50
+                        description: A String represents BAN.
+                      neidname:
+                        type: string
+                        maxLength: 500
+                        description: A String represents NEIDNAME used with supplier to identify Vzt or VzB. 
+                      primaryServiceKeyName:
+                        type: string
+                        maxLength: 500
+                        description: A String represents NEIDNAME used with supplier to identify Vzt or VzB.   
+                      location:
+                        type: object
+                        properties:
+                          address1:
+                            type: string
+                            maxLength: 500
+                            description: A String represents name of the Address.
+                          address2:
+                            type: string
+                            maxLength: 500
+                            description: A String represents name of the Address.  
+                          city:
+                            type: string
+                            maxLength: 100
+                            description: A String represents name of the city.
+                          state:
+                            type: string
+                            maxLength: 100
+                            description: A String represents name of the staet.
+                          zip:
+                            type: string
+                            maxLength: 200
+                            description: A String represents name of the zip value.
+                      product:
+                        type: string
+                        maxLength: 500
+                        description: A String represents name of the Product value Ex:Access.
+                      productGroupName:
+                        type: string
+                        maxLength: 500
+                        description: A String represents name of the Product value Ex:Access Services.  
+                      circuitType:
+                        type: string
+                        maxLength: 64
+                        description: A String represents circuitType value(VzB/VzT).
+      pageNumber:
+       type: string
+      recordsPerPage:
+       type: string
+      totalRecords:
+       type: string
+  CloseOutRequest:
+    type: object
+    required:
+        - userId
+        - serviceProfile
+        - networkID
+        - troubleReportID
+        - accountName
+        - sourceSystem
+    properties:
+      sourceSystem:
+        type: string 
+        description: Third party support  ex:cx
+      externalId:
+        type: string
+        description: A String contains the request id of trouble ticket. 
+      description:
+        type: string
+        description: A String. Description of the trouble ticket.  
+      ticketRelationship:
+         type: object
+         description: A reference type. List of values which are mandatory from the customer to create the trouble ticket and having relation with the trouble ticket.
+         required:
+            - userId
+            - serviceProfile
+            - networkID
+            - serviceID
+            - accountName
+            - troubleReportID
+         properties:
+             userId:
+                 type: string
+                 description: A String contains the userId of customer. 
+                 maxLength: 10
+             serviceProfile:
+                 type: string
+                 enum: [CLEC/Carrier,VZB/VZT]
+                 description: A String contains the service profile information of customer.
+                 maxLength: 8
+             networkID:
+                 type: string
+                 description: A String contains network id of the customer.
+                 maxLength: 2
+             serviceID:
+                type: string
+                description: A String contains service id of the customer.      
+             accountName:
+                 type: string
+                 description: A String contains account name of the customer.
+                 maxLength: 4  
+             troubleReportID:
+                 type: string
+                 description: A String contains troubleReportID of the ticket.
+                 maxLength: 32
+      
+      closeOutVerification:
+        type: string
+        description: A String contains the trouble id of trouble ticket for cLose out.              
+        enum:
+          - 0
+          - 1
+          - 2
+          
+      troubleClearancePerson:
+        type: object
+        description: Person requesting the Closeout
+        properties:
+                  name:
+                    type: string
+                    description: Escalation Request  Person Name
+                    maxLength: 64
+                  phone:
+                    type: string
+                    description: Escalation Request  phone
+                    maxLength: 18
+                  loc:
+                    type: object
+                    properties:
+                      civicAddress:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the Address.
+                      city:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the city.
+                      state:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the staet.
+                      zip:
+                        type: string
+                        maxLength: 64
+                        description: A String represents name of the zip value.
+                  email:
+                    type: string
+                    maxLength: 64
+                    description: A string represents the email id
+                    format: email
+                  fax:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents the fax number.
+                  response:
+                    type: string
+                    maxLength: 64
+                    description: A string represents response.
+                  pager:
+                    type: string
+                    maxLength: 64
+                    description: A Number represents pager number.
+  CloseOutResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+        #Here the status of the response is populated with either SUCCESS/ERROR.
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      verifyRepairCompletionResponse:
+        type: object
+        description: Object containing the response details from the system
+        properties:
+            
+            rdnSequenceItem:
+                type: array
+                description: rdnSequenceItem
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: contains networkid/account name/troubleReportID
+                      enum: [networkId,accountName,troubleReportID]
+                    assertion:
+                      type: string 
+                      description: value of corresponding type  
+
+  AddCommentRequest:
+    type: object
+    required:
+        - comment
+        - serviceProfile
+        - troubleReportID
+        - sourceSystem
+    properties:
+      sourceSystem:
+        type: string 
+        description: Third party support  ex:c
+        maxLength: 2  
+      comment:
+        type: string
+        description: A String. Description of the trouble ticket.  
+      troubleReportID:
+        type: string
+        description: A String contains troubleReportID of the ticket.
+        maxLength: 32  
+      serviceProfile:
+        type: string
+        enum: [VZB]
+        description: A String contains the service profile information of customer.
+        maxLength: 8  
+  AddCommentResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        description: Response Status
+        #Here the status of the response is populated with either SUCCESS/ERROR.
+      responseDescription:
+        type: string
+        description: Response Description
+      responseCode:
+        type: string
+        description: Response Code
+      troubleReportID: 
+        type: string
+        description: troubleReportID
+                  
